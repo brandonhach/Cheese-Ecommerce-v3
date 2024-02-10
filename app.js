@@ -31,7 +31,7 @@ app.get('/', (req, res) => {
 	res.render('index');
 });
 
-app.use('/cheese', cheeseListingRoutes);
+app.use('/', cheeseListingRoutes);
 
 //listen during startup
 app.listen(port, host, () => {

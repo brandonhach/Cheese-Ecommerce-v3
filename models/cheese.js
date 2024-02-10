@@ -85,3 +85,10 @@ exports.findAscending = () => {
 exports.findById = (id) => {
 	return cheeses.find((cheese) => cheese.id === id);
 };
+
+exports.save = (cheese) => {
+	cheese.id = uuidv4();
+	cheese.totalOffers = 0;
+	cheese.active = true;
+	cheeses.push(cheese);
+};

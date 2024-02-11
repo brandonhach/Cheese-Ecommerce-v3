@@ -15,6 +15,7 @@ app.set('view engine', 'ejs');
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan('tiny'));
+app.use(express.json());
 
 //error handling
 app.use((err, req, res, next) => {
@@ -31,7 +32,7 @@ app.get('/', (req, res) => {
 	res.render('index');
 });
 
-app.use('/', cheeseListingRoutes);
+app.use('/listing', cheeseListingRoutes);
 
 //listen during startup
 app.listen(port, host, () => {

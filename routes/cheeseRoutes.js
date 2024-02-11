@@ -9,7 +9,7 @@ router.get('/', controller.index);
 /**GET /item/:id : send details of cheese identified by id */
 router.get('/item/:id', controller.item);
 
-/**POST /cheese : create a new cheese listing */
+/**POST /post_cheese : create a new cheese listing */
 router.post('/post_cheese', upload, controller.create);
 
 /**GET /new: display create cheese form */
@@ -21,7 +21,7 @@ router.get('/new', controller.new);
 // /**PUT /cheese : create a new cheese listing */
 // router.put('/id', controller.update);
 
-// /**DELETE /cheese : delete the cheese identified by id */
-// router.delete('/:id', controller.delete);
+/**DELETE /item/:id : delete the cheese identified by id */
+router.delete('/item/:id', controller.delete);
 
 module.exports = router;

@@ -92,3 +92,13 @@ exports.save = (cheese) => {
 	cheese.active = true;
 	cheeses.push(cheese);
 };
+
+exports.deleteById = (id) => {
+	let index = cheeses.findIndex((cheese) => cheese.id === id);
+	if (index !== -1) {
+		cheeses.splice(index, 1);
+		return true;
+	} else {
+		return false;
+	}
+};

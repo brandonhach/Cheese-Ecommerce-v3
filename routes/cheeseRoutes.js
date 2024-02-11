@@ -1,15 +1,16 @@
 const express = require('express');
 const controller = require('../controllers/cheeseController');
 const router = express.Router();
+const { upload } = require('../middleware/fileUpload');
 
 /**GET /items: send all cheese listing to the user */
-router.get('/listing', controller.index);
+router.get('/', controller.index);
 
 /**GET /item/:id : send details of cheese identified by id */
-router.get('/listing/item/:id', controller.item);
+router.get('/item/:id', controller.item);
 
 /**POST /cheese : create a new cheese listing */
-router.post('/post_cheese', controller.create);
+router.post('/post_cheese', upload, controller.create);
 
 /**GET /new: display create cheese form */
 router.get('/new', controller.new);

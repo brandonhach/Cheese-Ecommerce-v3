@@ -32,15 +32,15 @@ exports.search = (req, res) => {
 	next(err);
 };
 
-/**POST /cheese : create a new cheese listing */
+/**POST /post_cheese : create a new cheese listing */
 exports.create = (req, res) => {
 	let cheese = req.body;
+	console.log(req.body);
+	console.log(req.file);
 	try {
-		if (req.file) {
-			cheese.image = '/images/listing_pic/' + req.image;
-		}
+		cheese.image = '/images/uploads/' + req.file.filename;
 		model.save(cheese);
-		res.redirect('./listing');
+		res.redirect('./');
 	} catch (error) {
 		console.log('Failed to create cheese listing:', error);
 		res.status(500);

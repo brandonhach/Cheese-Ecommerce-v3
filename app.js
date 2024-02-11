@@ -2,6 +2,7 @@
 const express = require('express');
 const morgan = require('morgan');
 const cheeseListingRoutes = require('./routes/cheeseRoutes');
+const methodOverride = require('method-override');
 
 //create app
 const app = express();
@@ -16,6 +17,7 @@ app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan('tiny'));
 app.use(express.json());
+app.use(methodOverride('_method'));
 
 //error handling
 app.use((err, req, res, next) => {

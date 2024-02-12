@@ -24,4 +24,7 @@ router.put('/item/:id/edit/update', upload, controller.update);
 /**DELETE /item/:id : delete the cheese identified by id */
 router.delete('/item/:id', controller.delete);
 
+/**GET /item/:id : search for cheese listing via title and/or detail field (case-sens) */
+router.get('/search', controller.search);
+
 module.exports = router;

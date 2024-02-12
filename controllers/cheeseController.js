@@ -47,15 +47,48 @@ exports.create = (req, res) => {
 	}
 };
 
+/**POST /post_cheese : create a new cheese listing */
 exports.new = (req, res) => {
 	res.render('./cheese/new');
 };
 
+/**DELETE /item/:id : delete a cheese listing */
 exports.delete = (req, res) => {
 	let id = req.params.id;
 	if (model.deleteById(id)) {
 		res.redirect('/listing');
 	} else {
 		res.status(404).send('Cannot find cheese with id ' + id);
+	}
+};
+
+/**UPDATE /item/:id : update a cheese listing */
+exports.update = (req, res) => {
+	let id = req.params.id;
+	let updatedCheese = {
+		title: req.body.title,
+		condition: req.body.condition,
+		price: req.body.price,
+		seller: req.body.seller,
+		details: req.body.details,
+		image: req.file ? '/images/uploads/' + req.file.filename : undefined,
+	};
+	if (model.updateById(id, updatedCheese)) {
+		res.redirect('/listing/item/' + id);
+	} else {
+		let err = new Error('Cannot find a story with id ' + id);
+		err.status = 404;
+	}
+};
+
+/**GET /item/:id/edit : create a new cheese listing */
+exports.edit = (req, res) => {
+	let id = req.params.id;
+	let cheese = model.findById(id);
+	if (cheese) {
+		res.render('./cheese/edit', { cheese });
+	} else {
+		let err = new Error('Cannot find a cheese with id ' + id);
+		err.status = 404;
 	}
 };

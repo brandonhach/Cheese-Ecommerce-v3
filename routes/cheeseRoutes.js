@@ -15,11 +15,11 @@ router.post('/post_cheese', upload, controller.create);
 /**GET /new: display create cheese form */
 router.get('/new', controller.new);
 
-// /**GET /cheese/:id/edit : send html form for editing an existing cheese */
-// router.get('/:id/edit', controller.edit);
+/**GET /item/:id/edit : send html form for editing an existing cheese */
+router.get('/item/:id/edit', controller.edit);
 
-// /**PUT /cheese : create a new cheese listing */
-// router.put('/id', controller.update);
+// /**PUT /item/:id : update a cheese listing */
+router.put('/item/:id/edit/update', upload, controller.update);
 
 /**DELETE /item/:id : delete the cheese identified by id */
 router.delete('/item/:id', controller.delete);

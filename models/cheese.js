@@ -102,3 +102,20 @@ exports.deleteById = (id) => {
 		return false;
 	}
 };
+
+exports.updateById = (id, newCheese) => {
+	let cheese = cheeses.find((cheese) => cheese.id === id);
+	if (cheese) {
+		cheese.title = newCheese.title;
+		cheese.condition = newCheese.condition;
+		cheese.price = newCheese.price;
+		cheese.seller = newCheese.seller;
+		cheese.details = newCheese.details;
+		if (cheese.image) {
+			cheese.image = newCheese.image;
+		}
+		return true;
+	} else {
+		return false;
+	}
+};

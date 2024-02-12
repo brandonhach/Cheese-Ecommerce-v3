@@ -119,3 +119,10 @@ exports.updateById = (id, newCheese) => {
 		return false;
 	}
 };
+
+exports.search = (query) => {
+	query = query.toLowerCase();
+	return cheeses.filter((cheese) => {
+		return cheese.title.toLowerCase().includes(query) || cheese.details.toLowerCase().includes(query);
+	});
+};

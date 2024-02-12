@@ -111,7 +111,7 @@ exports.updateById = (id, newCheese) => {
 		cheese.price = newCheese.price;
 		cheese.seller = newCheese.seller;
 		cheese.details = newCheese.details;
-		if (cheese.image) {
+		if (newCheese.image) {
 			cheese.image = newCheese.image;
 		}
 		return true;

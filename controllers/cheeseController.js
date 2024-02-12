@@ -71,12 +71,11 @@ exports.update = (req, res) => {
 		price: req.body.price,
 		seller: req.body.seller,
 		details: req.body.details,
-		image: req.file ? '/images/uploads/' + req.file.filename : undefined,
 	};
 	if (model.updateById(id, updatedCheese)) {
 		res.redirect('/listing/item/' + id);
 	} else {
-		let err = new Error('Cannot find a story with id ' + id);
+		let err = new Error('Cannot find a cheese with id ' + id);
 		err.status = 404;
 	}
 };

@@ -72,6 +72,11 @@ exports.update = (req, res) => {
 		seller: req.body.seller,
 		details: req.body.details,
 	};
+
+	if (req.file) {
+		updatedCheese.image = '/images/uploads/' + req.file.filename;
+	}
+
 	if (model.updateById(id, updatedCheese)) {
 		res.redirect('/listing/item/' + id);
 	} else {

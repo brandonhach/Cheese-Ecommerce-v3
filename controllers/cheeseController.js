@@ -96,3 +96,21 @@ exports.edit = (req, res) => {
 		err.status = 404;
 	}
 };
+
+/**GET /item/:id : search for cheese listing via title and/or detail field (case-sens) */
+exports.search = (req, res) => {
+	const query = req.query.searchBar;
+	try {
+		if (query) {
+			console.log(query);
+			const cheeses = model.search(query);
+			res.render('./cheese/items', { cheeses });
+		} else {
+			const cheeses = 0;
+			res.render('./cheese/items', { cheeses });
+		}
+	} catch (error) {
+		console.error(error);
+		res.status(500).send('An error occurred during the search.');
+	}
+};

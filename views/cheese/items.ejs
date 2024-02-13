@@ -6,7 +6,7 @@
 			<% cheeses.forEach(cheese => { %>
 			<a href="/listing/item/<%= cheese.id %>" class="w-full">
 				<article class="bg-slate-100 border-4 rounded-lg border-neutral-950 overflow-hidden">
-					<div class="relative" style="padding-top: 100%">
+					<div class="aspect-square w-full relative">
 						<img src="<%= cheese.image %>" alt="" class="absolute inset-0 w-full h-full object-cover" />
 					</div>
 					<div class="flex flex-col bg-neutral-950 p-1">

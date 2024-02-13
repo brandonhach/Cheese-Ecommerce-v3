@@ -1,15 +1,15 @@
 <%- include('../partials/header.ejs') %>
-<body class="w-screen h-screen flex flex-col bg-neutral-900 font-sans">
-	<main class="w-screen h-full bg-neutral-900 text-white mb-10">
-		<% if(cheeses.length > 0) { %> <% if(cheeses.length <= 6) { %>
-		<div class="w-full h-full grid grid-cols-6 grid-rows-1 gap-4 p-6 items-center">
+<body class="w-screen flex flex-col bg-neutral-900 font-sans pt-16">
+	<main class="w-screen overflow-auto bg-neutral-900 text-white mb-10">
+		<% if(cheeses.length > 0) { %>
+		<div class="grid grid-cols-6 gap-4 p-6 items-center">
 			<% cheeses.forEach(cheese => { %>
-			<a href="/listing/item/<%= cheese.id%>" class="h-1/2 w-full"
-				><article class="bg-slate-100 h-full w-full border-4 rounded-lg border-neutral-950">
-					<div class="w-full h-3/4 relative">
+			<a href="/listing/item/<%= cheese.id %>" class="w-full">
+				<article class="bg-slate-100 border-4 rounded-lg border-neutral-950 overflow-hidden">
+					<div class="relative" style="padding-top: 100%">
 						<img src="<%= cheese.image %>" alt="" class="absolute inset-0 w-full h-full object-cover" />
 					</div>
-					<div class="flex flex-col bg-neutral-950 h-1/4 w-full pr-1 pl-1 pt-1">
+					<div class="flex flex-col bg-neutral-950 p-1">
 						<div>
 							<h3 class="text-xl"><%= cheese.title %></h3>
 							<p class="text-sm text-gray-500"><%= cheese.condition %></p>
@@ -19,32 +19,12 @@
 							<p><%= cheese.totalOffers %> offers</p>
 						</div>
 					</div>
-				</article></a
-			><% }) %>
+				</article>
+			</a>
+			<% }) %>
 		</div>
 		<% } else { %>
-		<div class="w-full h-full grid grid-cols-6 grid-rows-2 gap-4 p-6 items-center">
-			<% cheeses.forEach(cheese => { %>
-			<a href="/listing/item/<%= cheese.id%>" class="h-full w-full"
-				><article class="bg-slate-100 h-full w-full border-4 rounded-lg border-neutral-950">
-					<div class="w-full h-3/4 relative">
-						<img src="<%= cheese.image %>" alt="" class="absolute inset-0 w-full h-full object-cover" />
-					</div>
-					<div class="flex flex-col bg-neutral-950 h-1/4 w-full pr-1 pl-1 pt-1">
-						<div>
-							<h3 class="text-xl"><%= cheese.title %></h3>
-							<p class="text-sm text-gray-500"><%= cheese.condition %></p>
-						</div>
-						<div class="flex flex-row justify-between">
-							<p class="text-amber-200">$<%= cheese.price %></p>
-							<p><%= cheese.totalOffers %> offers</p>
-						</div>
-					</div>
-				</article></a
-			><% }) %>
-		</div>
-		<% } %> <% } else { %>
-		<h1>There are no cheese to display</h1>
+		<h1>There are no cheeses to display</h1>
 		<% } %>
 	</main>
 </body>

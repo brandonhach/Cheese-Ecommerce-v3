@@ -7,63 +7,60 @@ exports.index = (req, res) => {
 };
 
 /**GET /item/:id : send details of cheese identified by id */
-exports.item = (req, res) => {
+exports.item = (req, res, next) => {
 	let id = req.params.id;
 	let cheese = model.findById(id);
-	if (cheese) {
-		return res.render('./cheese/item', { cheese });
+	try {
+		if (cheese) {
+			return res.render('./cheese/item', { cheese });
+		} else {
+			let err = new Error('Cannot find cheese with id ' + id);
+			err.status = 404;
+			next(err);
+		}
+	} catch (error) {
+		console.log('Failed to create cheese listing:', error);
+		next(error);
 	}
-	// If the cheese is not found, then send a 404 error.
-	let err = new Error('Cannot find cheese with id ' + id);
-	err.status = 404;
-	next(err);
-};
-
-/**GET /search: get matching cheese */
-exports.search = (req, res) => {
-	let id = req.params.id;
-	let cheese = model.findById(id);
-
-	if (cheese) {
-		res.render('./cheese/search', { cheese });
-	}
-	let err = new Error('Cannot find cheese');
-	err.status = 404;
-	next(err);
 };
 
 /**POST /post_cheese : create a new cheese listing */
-exports.create = (req, res) => {
+exports.create = (req, res, next) => {
 	let cheese = req.body;
-	console.log(req.body);
-	console.log(req.file);
 	try {
 		cheese.image = '/images/uploads/' + req.file.filename;
 		model.save(cheese);
 		res.redirect('/listing');
 	} catch (error) {
 		console.log('Failed to create cheese listing:', error);
-		res.status(500);
+		next(error);
 	}
 };
 
-/**POST /post_cheese : create a new cheese listing */
+/**GET /new : create a new cheese listing */
 exports.new = (req, res) => {
 	res.render('./cheese/new');
 };
 
 /**DELETE /item/:id : delete a cheese listing */
-exports.delete = (req, res) => {
+exports.delete = (req, res, next) => {
 	let id = req.params.id;
-	if (model.deleteById(id)) {
-		res.redirect('/listing');
-	} else {
-		res.status(404).send('Cannot find cheese with id ' + id);
+	try {
+		if (model.deleteById(id)) {
+			res.redirect('/listing');
+		} else {
+			let err = new Error('Cannot delete cheese with id ' + id);
+			err.status = 404;
+			next(err);
+		}
+	} catch (error) {
+		console.error('Failed to delete cheese listing:', error);
+		next(error);
 	}
 };
 
 /**UPDATE /item/:id : update a cheese listing */
-exports.update = (req, res) => {
+exports.update = (req, res, next) => {
 	let id = req.params.id;
 	let updatedCheese = {
 		title: req.body.title,
@@ -73,32 +70,40 @@ exports.update = (req, res) => {
 		details: req.body.details,
 	};
 
-	if (req.file) {
-		updatedCheese.image = '/images/uploads/' + req.file.filename;
-	}
+	try {
+		if (req.file) {
+			updatedCheese.image = '/images/uploads/' + req.file.filename;
+		}
 
-	if (model.updateById(id, updatedCheese)) {
-		res.redirect('/listing/item/' + id);
-	} else {
-		let err = new Error('Cannot find a cheese with id ' + id);
-		err.status = 404;
+		if (model.updateById(id, updatedCheese)) {
+			res.redirect('/listing/item/' + id);
+		}
+	} catch (error) {
+		console.error('Failed to update cheese listing:', error);
+		next(error);
 	}
 };
 
 /**GET /item/:id/edit : create a new cheese listing */
-exports.edit = (req, res) => {
+exports.edit = (req, res, next) => {
 	let id = req.params.id;
 	let cheese = model.findById(id);
-	if (cheese) {
-		res.render('./cheese/edit', { cheese });
-	} else {
-		let err = new Error('Cannot find a cheese with id ' + id);
-		err.status = 404;
+	try {
+		if (cheese) {
+			res.render('./cheese/edit', { cheese });
+		} else {
+			let err = new Error('Cannot find a cheese with id ' + id);
+			err.status = 404;
+			next(err);
+		}
+	} catch (error) {
+		console.error('Failed to edit cheese listing:', error);
+		next(error);
 	}
 };
 
 /**GET /item/:id : search for cheese listing via title and/or detail field (case-sens) */
-exports.search = (req, res) => {
+exports.search = (req, res, next) => {
 	const query = req.query.searchBar;
 	try {
 		if (query) {
@@ -110,7 +115,7 @@ exports.search = (req, res) => {
 			res.render('./cheese/items', { cheeses });
 		}
 	} catch (error) {
-		console.error(error);
-		res.status(500).send('An error occurred during the search.');
+		console.error('An error occurred during the search.', error);
+		next(error);
 	}
 };

@@ -19,7 +19,20 @@ app.use(morgan('tiny'));
 app.use(express.json());
 app.use(methodOverride('_method'));
 
-//error handling
+//set up routes
+app.get('/', (req, res) => {
+	res.render('index');
+});
+
+app.use('/listing', cheeseListingRoutes);
+
+//error-handler
+app.use((req, res, next) => {
+	let err = new Error('The server cannot locate ' + req.url);
+	err.status = 404;
+	next(err);
+});
+
 app.use((err, req, res, next) => {
 	if (!err.status) {
 		err.status = 500;
@@ -28,13 +41,6 @@ app.use((err, req, res, next) => {
 	res.status(err.status);
 	res.render('error', { error: err });
 });
-
-//set up routes
-app.get('/', (req, res) => {
-	res.render('index');
-});
-
-app.use('/listing', cheeseListingRoutes);
 
 //listen during startup
 app.listen(port, host, () => {

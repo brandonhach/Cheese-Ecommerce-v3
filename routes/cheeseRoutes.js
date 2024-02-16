@@ -3,6 +3,8 @@ const controller = require('../controllers/cheeseController');
 const router = express.Router();
 const { upload } = require('../middleware/fileUpload');
 
+// route off of /listing/...
+
 /**GET /items: send all cheese listing to the user */
 router.get('/', controller.index);
 

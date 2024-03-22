@@ -1,6 +1,6 @@
 const model = require('../models/cheese');
 
-/**GET /items: send all cheese listing to the user */
+/**GET /items: send all cheese listing to the user x */
 exports.index = (req, res) => {
 	let cheeses = model.findAscending();
 	res.render('./cheese/items', { cheeses });
@@ -27,17 +27,22 @@ exports.item = (req, res, next) => {
 /**POST /post_cheese : create a new cheese listing */
 exports.create = (req, res, next) => {
 	let cheese = req.body;
+	cheese.image = '/images/uploads/' + req.file.filename;
+	let item = new model(cheese);
 	try {
-		cheese.image = '/images/uploads/' + req.file.filename;
-		model.save(cheese);
-		res.redirect('/listing');
-	} catch (error) {
-		console.log('Failed to create cheese listing:', error);
-		next(error);
+		item.save().then((cheese) => {
+			res.redirect('/listing');
+		});
+	} catch (err) {
+		if (err.name === 'ValidationError') {
+			err.status = 400;
+		}
+		console.log('Failed to create cheese listing:', err);
+		next(err);
 	}
 };
 
-/**GET /new : create a new cheese listing */
+/**GET /new : create a new cheese listing x */
 exports.new = (req, res) => {
 	res.render('./cheese/new');
 };

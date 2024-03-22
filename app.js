@@ -28,7 +28,7 @@ app.get('/', (req, res) => {
 
 app.use('/listing', cheeseListingRoutes);
 
-error - handler;
+//error-handler
 app.use((req, res, next) => {
 	let err = new Error('The server cannot locate ' + req.url);
 	err.status = 404;

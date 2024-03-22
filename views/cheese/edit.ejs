@@ -16,6 +16,7 @@
 			>
 				<label for="title" class="p-4"></label>
 				<input
+					required
 					class="text-5xl font-semibold text-amber-100 bg-transparent overflow-hidden"
 					type="text"
                     name="title"
@@ -26,7 +27,7 @@
 				<label for="condition" class="font-semibold text-amber-50"
 					>Quality:
 					<span class="text-gray-500 font-semibold">
-						<select id="condition" name="condition" class="text-gray-500 font-semibold bg-transparent">
+						<select id="condition" name="condition" class="text-gray-500 font-semibold bg-transparent" required>
                             <option value="Mild" <% if (cheese.condition === 'Mild') { %>selected<% } %>>Mild</option>
                             <option value="Matured" <% if (cheese.condition === 'Matured') { %>selected<% } %>>Matured</option>
                             <option value="Aged" <% if (cheese.condition === 'Aged') { %>selected<% } %>>Aged</option>
@@ -41,6 +42,7 @@
 					<span class="text-amber-200 font-semibold"
 						>$
 						<input
+							required
 							type="number"
 							name="price"
 							id="price"  
@@ -59,6 +61,7 @@
 				<label for="seller" class="font-semibold text-amber-50">
 					Seller:
 					<input
+						required
 						type="text"
 						name="seller"
 						id="seller"
@@ -68,6 +71,7 @@
 
 				<label for="details">
 					<textarea
+						required
 						name="details"
 						id="details"
 						cols="51"

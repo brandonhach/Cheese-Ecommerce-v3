@@ -3,6 +3,7 @@ const express = require('express');
 const morgan = require('morgan');
 const cheeseListingRoutes = require('./routes/cheeseRoutes');
 const methodOverride = require('method-override');
+const mongoose = require('mongoose');
 
 //create app
 const app = express();
@@ -43,6 +44,8 @@ app.use((err, req, res, next) => {
 });
 
 //listen during startup
-app.listen(port, host, () => {
-	console.log('Server is running on port', port);
+mongoose.connect(url).then(() => {
+	app.listen(port, host, () => {
+		console.log('Server is running on port', port);
+	});
 });

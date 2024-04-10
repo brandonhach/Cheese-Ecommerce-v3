@@ -5,7 +5,11 @@ const cheeseSchema = new Schema(
 	{
 		title: { type: String, required: [true, 'Title is required'] },
 		seller: { type: String, required: [true, 'Seller is required'] },
-		condition: { type: String, required: [true, 'Condition is required'] },
+		condition: {
+			type: String,
+			required: [true, 'Condition is required'],
+			enum: ['Mild', 'Matured', 'Aged', 'Extra-Aged', 'Vintage'],
+		},
 		price: {
 			type: Number,
 			required: [true, 'Price is required'],

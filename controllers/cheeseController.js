@@ -28,7 +28,7 @@ exports.item = (req, res, next) => {
 					return res.render('./cheese/item', { cheese });
 				} else {
 					let err = new Error('Cannot find cheese with id ' + id);
-					err.status = 404;
+					err.status = 400;
 					next(err);
 				}
 			} catch (error) {
@@ -79,7 +79,7 @@ exports.delete = (req, res, next) => {
 					res.redirect('/listing');
 				} else {
 					let err = new Error('Cannot delete cheese with id ' + id);
-					err.status = 404;
+					err.status = 400;
 					next(err);
 				}
 			})
@@ -124,7 +124,7 @@ exports.update = (req, res, next) => {
 					res.redirect('/listing/item/' + id);
 				} else {
 					let err = new Error('Cannot delete cheese with id ' + id);
-					err.status = 404;
+					err.status = 400;
 					next(err);
 				}
 			})
@@ -157,7 +157,7 @@ exports.edit = (req, res, next) => {
 					res.render('./cheese/edit', { cheese });
 				} else {
 					let err = new Error('Cannot find a cheese with id ' + id);
-					err.status = 404;
+					err.status = 400;
 					next(err);
 				}
 			} catch (error) {
